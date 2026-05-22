@@ -1,0 +1,162 @@
+SQL> WAQTD number of employees working in each department except President.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+SQL> 
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB !='PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         2         10
+
+
+
+SQL>WAQTD total salary needed to pay all the employees in each job.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+SQL> SELECT SUM(SAL), JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  SUM(SAL) JOB
+---------- ---------
+      4150 CLERK
+      5600 SALESMAN
+      5000 PRESIDENT
+      8275 MANAGER
+      6000 ANALYST
+
+
+SQL> WAQTD number of employees working as Manager in each department.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+SQL>   5  
+SQL> SELECT COUNT
+  2  (*), DEPTNO
+  3  FROM EMP
+  4  WHERE JOB IN 'MANAGER'
+  5  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         30
+         1         20
+         1         10
+
+
+
+SQL> WAQTD average salary needed to pay all the employees in each department excluding the employees
+ of deptno 20.
+SP2-0734: unknown command beginning "WAQTD aver..." - rest of line ignored.
+SQL> SELECT AVG(SAL)
+  2  ,DEPTNO
+  3  FROM EMP
+  4  WHERE DEPTNO NOT IN 20
+  5  GROUP BY DEPTNO;
+
+  AVG(SAL)     DEPTNO
+---------- ----------
+1566.66667         30
+2916.66667         10
+
+
+
+SQL> WAQTD number of employees having character 'A' in their names in each job.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB;
+
+  COUNT(*) JOB
+---------- ---------
+         3 SALESMAN
+         2 CLERK
+         2 MANAGER
+
+
+
+SQL> WAQTD number of employees and average salary needed to pay the employees whose salary is greate
+r than 2000 in each department.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+SQL> SELECT COUNT(*), AVG(SAL), DEPTNO
+  2  FROM EMP
+  3  WHERE SAL>2000
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)   AVG(SAL)     DEPTNO
+---------- ---------- ----------
+         1       2850         30
+         3 2991.66667         20
+         2       3725         10
+
+SQL> 
+SQL> WAQTD total salary needed to pay and number of Salesmans in each department
+SP2-0734: unknown command beginning "WAQTD tota..." - rest of line ignored.
+
+SQL> SELECT SUM(SAL), COUNT(*), DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'SALESMAN'
+  4  GROUP BY DEPTNO;
+
+  SUM(SAL)   COUNT(*)     DEPTNO
+---------- ---------- ----------
+      5600          4         30
+
+
+
+SQL> WAQTD number of employees with their maximum salaries in each job.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+SQL> SELECT COUNT(*), MAX(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB ;
+
+  COUNT(*)   MAX(SAL) JOB
+---------- ---------- ---------
+         4       1300 CLERK
+         4       1600 SALESMAN
+         1       5000 PRESIDENT
+         3       2975 MANAGER
+         2       3000 ANALYST
+
+
+
+SQL> 
+SQL> WAQTD maximum salaries given to an employee working in each department.
+SP2-0734: unknown command beginning "WAQTD maxi..." - rest of line ignored.
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO;
+
+  MAX(SAL)     DEPTNO
+---------- ----------
+      2850         30
+      3000         20
+      5000         10
+
+
+
+
+SQL> WAQTD number of times the salaries present in employee table.
+SP2-0734: unknown command beginning "WAQTD numb..." - rest of line ignored.
+SQL> SELECT COUNT(*),SAL
+  2  FROM EMP
+  3  GROUP BY SAL;
+
+  COUNT(*)        SAL
+---------- ----------
+         1       2450
+         1       5000
+         1       1300
+         2       1250
+         1       2850
+         1       2975
+         1       1100
+         2       3000
+         1        800
+         1       1600
+         1       1500
+         1        950
+

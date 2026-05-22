@@ -1,0 +1,334 @@
+1. WAQTD name of the employee and his manager's name if employee is working as CLERK.
+ 
+
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME,
+  2         E2.ENAME AS MANAGER_NAME
+  3  FROM EMP E1, EMP E2
+  4  WHERE E1.MGR= E2.EMPNO AND E1.JOB='CLERK';
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+SMITH      FORD
+ADAMS      SCOTT
+JAMES      BLAKE
+MILLER     CLARK
+
+
+2.WAQTD name of the employee and manager's designation if manager works in department 10 or 20.
+SQL>    SELECT E1.ENAME AS EMPLOYEE_NAME,E2.ENAME AS MANAGER_NAME
+  2    FROM EMP E1,EMP E2
+  3  WHERE E1.MGR=E2.EMPNO AND E1.DEPTNO =10 OR E1.DEPTNO =20;
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+SMITH      SMITH
+SMITH      ALLEN
+SMITH      WARD
+SMITH      JONES
+SMITH      MARTIN
+SMITH      BLAKE
+SMITH      CLARK
+SMITH      SCOTT
+SMITH      KING
+SMITH      TURNER
+SMITH      ADAMS
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+SMITH      JAMES
+SMITH      FORD
+SMITH      MILLER
+JONES      SMITH
+JONES      ALLEN
+JONES      WARD
+JONES      JONES
+JONES      MARTIN
+JONES      BLAKE
+JONES      CLARK
+JONES      SCOTT
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+JONES      KING
+JONES      TURNER
+JONES      ADAMS
+JONES      JAMES
+JONES      FORD
+JONES      MILLER
+SCOTT      SMITH
+SCOTT      ALLEN
+SCOTT      WARD
+SCOTT      JONES
+SCOTT      MARTIN
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+SCOTT      BLAKE
+SCOTT      CLARK
+SCOTT      SCOTT
+SCOTT      KING
+SCOTT      TURNER
+SCOTT      ADAMS
+SCOTT      JAMES
+SCOTT      FORD
+SCOTT      MILLER
+ADAMS      SMITH
+ADAMS      ALLEN
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+ADAMS      WARD
+ADAMS      JONES
+ADAMS      MARTIN
+ADAMS      BLAKE
+ADAMS      CLARK
+ADAMS      SCOTT
+ADAMS      KING
+ADAMS      TURNER
+ADAMS      ADAMS
+ADAMS      JAMES
+ADAMS      FORD
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+ADAMS      MILLER
+FORD       SMITH
+FORD       ALLEN
+FORD       WARD
+FORD       JONES
+FORD       MARTIN
+FORD       BLAKE
+FORD       CLARK
+FORD       SCOTT
+FORD       KING
+FORD       TURNER
+
+EMPLOYEE_N MANAGER_NA
+---------- ----------
+FORD       ADAMS
+FORD       JAMES
+FORD       FORD
+FORD       MILLER
+CLARK      KING
+MILLER     CLARK
+
+72 rows selected.
+
+
+3.WAQTD name of the employee and manager's salary if both earn more than 2300.
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME,
+  2          E2.SAL AS MANAGER_SALARY
+  3  FROM EMP E1 ,EMP E2
+  4  WHERE E1.MGR=E2.EMPNO 
+  5  AND E1.SAL>2300
+  6  AND E2.SAL>2300;
+
+EMPLOYEE_N MANAGER_SALARY
+---------- --------------
+JONES                5000
+BLAKE                5000
+CLARK                5000
+SCOTT                2975
+FORD                 2975
+
+4.WAQTD employee name and manager's hiredate if employee was hired before 1982.
+
+SQL>  SELECT E1.ENAME AS EMPLOYEE_NAME,
+  2           E2.HIREDATE AS MANAGER_HIREDATE
+  3   FROM EMP E1 ,EMP E2
+  4   WHERE E1.MGR=E2.EMPNO 
+  5  AND E1.HIREDATE > '31-DEC-1982';
+
+EMPLOYEE_N MANAGER_H
+---------- ---------
+SCOTT      02-APR-81
+ADAMS      19-APR-87
+
+5.WAQTD employee name and manager's commission if employee works as SALESMAN and manager works in department 30.
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME , E2.COMM AS MANAGER_COMM
+  2  FROM EMP E1 ,EMP E2
+  3  WHERE E1.MGR= E2.EMPNO  
+  4  AND E1.JOB='SALESMAN'
+  5  AND E2.DEPTNO=30;
+
+EMPLOYEE_N MANAGER_COMM
+---------- ------------
+ALLEN
+WARD
+MARTIN
+TURNER
+
+
+6.WAQTD employee name, manager name and their salaries if employee earns more than manager.
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME,
+  2          E2.ENAME AS MANAGER_NAME,
+  3           E1.SAL AS EMP_SAL,
+  4            E2.SAL AS MANAGER_SAL
+  5  FROM EMP E1,EMP E2
+  6  WHERE E1.MGR=E2.EMPNO 
+  7  AND E1.SAL >E2.SAL;
+
+EMPLOYEE_N MANAGER_NA    EMP_SAL MANAGER_SAL
+---------- ---------- ---------- -----------
+SCOTT      JONES            3000        2975
+FORD       JONES            3000        2975
+
+
+
+7.WAQTD employee name and hiredate, manager name and hiredate if manager was hired before employee.
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME ,
+  2          E1.HIREDATE AS EMP_HIREDATE,
+  3            E2.ENAME AS MANAGER_NAME,
+  4             E2.HIREDATE AS MGR_HIREDATE
+  5   FROM EMP E1,EMP E2
+  6   WHERE E1.MGR = E2.EMPNO
+  7   AND E1.HIREDATE <E2.HIREDATE;
+
+EMPLOYEE_N EMP_HIRED MANAGER_NA MGR_HIRED
+---------- --------- ---------- ---------
+SMITH      17-DEC-80 FORD       03-DEC-81
+ALLEN      20-FEB-81 BLAKE      01-MAY-81
+WARD       22-FEB-81 BLAKE      01-MAY-81
+JONES      02-APR-81 KING       17-NOV-81
+BLAKE      01-MAY-81 KING       17-NOV-81
+CLARK      09-JUN-81 KING       17-NOV-81
+
+6 rows selected.
+
+
+8.WAQTD employee name and manager name if both are working in the same job.
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME,
+  2          E2.ENAME AS MANAGER_NAME
+  3  FROM EMP E1,EMP E2
+  4  WHERE E1.MGR = E2.EMPNO AND 
+  5   E1.JOB=E2.JOB;
+
+no rows selected
+
+
+9.WAQTD employee name and manager name if manager is working as MANAGER.
+SQL> SELECT E1.ENAME AS EMPLOYEE_NAME,
+  2           E1.JOB AS EMP_JOB,
+  3            E2.ENAME AS MANAGER_NAME ,
+  4            E2.JOB AS MGR_JOB
+  5   FROM EMP E1,EMP E2
+  6   WHERE E1.MGR=E2.MGR 
+  7   AND E1.JOB='MANAGER'
+  8   AND E2.JOB=
+  9   'MANAGER';
+
+EMPLOYEE_N EMP_JOB   MANAGER_NA MGR_JOB
+---------- --------- ---------- ---------
+CLARK      MANAGER   JONES      MANAGER
+BLAKE      MANAGER   JONES      MANAGER
+JONES      MANAGER   JONES      MANAGER
+CLARK      MANAGER   BLAKE      MANAGER
+BLAKE      MANAGER   BLAKE      MANAGER
+JONES      MANAGER   BLAKE      MANAGER
+CLARK      MANAGER   CLARK      MANAGER
+BLAKE      MANAGER   CLARK      MANAGER
+JONES      MANAGER   CLARK      MANAGER
+
+9 rows selected.
+
+
+10.WAQTD employee name and manager name along with their annual salaries if employee works in dept 10 or 20 and manager salary is greater than employee salary.
+SQL>   SELECT E1.ENAME AS EMP_NAME ,
+  2            E1.SAL*12 AS ANUAL_SAL
+  3   ,         E2.ENAME AS MGR_SAL,
+  4              E2.SAL*12 AS ANUAL_SAL
+  5   FROM EMP E1, EMP E2
+  6   WHERE E1.MGR =E2.EMPNO AND 
+  7                             E1.DEPTNO =10 OR E1.DEPTNO=20
+  8  AND E2.SAL > E1.SAL;
+
+EMP_NAME    ANUAL_SAL MGR_SAL     ANUAL_SAL
+---------- ---------- ---------- ----------
+SMITH            9600 JAMES           11400
+SMITH            9600 ADAMS           13200
+SMITH            9600 WARD            15000
+SMITH            9600 MARTIN          15000
+SMITH            9600 MILLER          15600
+SMITH            9600 TURNER          18000
+SMITH            9600 ALLEN           19200
+SMITH            9600 CLARK           29400
+SMITH            9600 BLAKE           34200
+SMITH            9600 JONES           35700
+SMITH            9600 SCOTT           36000
+
+EMP_NAME    ANUAL_SAL MGR_SAL     ANUAL_SAL
+---------- ---------- ---------- ----------
+SMITH            9600 FORD            36000
+SMITH            9600 KING            60000
+ADAMS           13200 WARD            15000
+ADAMS           13200 MARTIN          15000
+ADAMS           13200 MILLER          15600
+ADAMS           13200 TURNER          18000
+ADAMS           13200 ALLEN           19200
+ADAMS           13200 CLARK           29400
+ADAMS           13200 BLAKE           34200
+ADAMS           13200 JONES           35700
+ADAMS           13200 SCOTT           36000
+
+EMP_NAME    ANUAL_SAL MGR_SAL     ANUAL_SAL
+---------- ---------- ---------- ----------
+ADAMS           13200 FORD            36000
+ADAMS           13200 KING            60000
+JONES           35700 SCOTT           36000
+JONES           35700 FORD            36000
+JONES           35700 KING            60000
+FORD            36000 KING            60000
+SCOTT           36000 KING            60000
+CLARK           29400 KING            60000
+MILLER          15600 CLARK           29400
+
+31 rows selected.
+
+11.WAQTD employee name and manager's designation for all employees.
+SQL> WAQTD employee name and manager's designation for all employees.
+SP2-0734: unknown command beginning "WAQTD empl..." - rest of line ignored.
+SQL> SELECT E1.ENAME  AS EMP_NAME ,
+  2          E2.JOB AS MGR_JOB
+  3  FROM EMP E1 , EMP E2
+  4  WHERE E1.MGR =E2.EMPNO;
+
+EMP_NAME   MGR_JOB
+---------- ---------
+SMITH      ANALYST
+ALLEN      MANAGER
+WARD       MANAGER
+JONES      PRESIDENT
+MARTIN     MANAGER
+BLAKE      PRESIDENT
+CLARK      PRESIDENT
+SCOTT      MANAGER
+TURNER     MANAGER
+ADAMS      ANALYST
+JAMES      MANAGER
+
+EMP_NAME   MGR_JOB
+---------- ---------
+FORD       MANAGER
+MILLER     MANAGER
+
+13 rows selected.
+
+
+12.WAQTD employee name and manager's salary for all employees if manager's salary ends with 50.
+
+
+SQL> SELECT E1.ENAME AS EMP_NAME,E2.SAL AS MGR_SAL
+  2  FROM EMP E1 ,EMP E2
+  3  WHERE E1.MGR = E2.EMPNO
+  4  AND E2.SAL LIKE '%50';
+
+EMP_NAME      MGR_SAL
+---------- ----------
+ALLEN            2850
+WARD             2850
+MARTIN           2850
+TURNER           2850
+JAMES            2850
+MILLER           2450
+
+6 rows selected.

@@ -1,0 +1,382 @@
+SQL> SELECT*
+  2  FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+
+Q1  WAQTD name of the employees earning more than ADAMS.
+SQL> SELECT ENAME
+  2  FROM EMP 
+  3  WHERE SAL >( 
+  4               SELECT SAL 
+  5                FROM EMP 
+  6                  WHERE ENAME = 'ADAMS');
+
+ENAME
+----------
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+FORD
+MILLER
+
+Q2 WAQTD name and salary of the employees earning less than KING.
+SQL> SELECT ENAME , SAL
+  2  FROM EMP
+  3  WHERE SAL < (
+  4               SELECT SAL 
+  5                FROM EMP
+  6                WHERE ENAME ='KING');
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+
+Q3> WAQTD name and deptno of the employees if they are working in the same dept as JONES.
+SQL> SELECT ENAME , DEPTNO 
+  2  FROM EMP
+  3  WHERE DEPTNO =(
+  4                  SELECT DEPTNO 
+  5                  FROM EMP
+  6                   WHERE ENAME='JONES');
+
+ENAME          DEPTNO
+---------- ----------
+SMITH              20
+JONES              20
+SCOTT              20
+ADAMS              20
+FORD               20
+
+Q4>  WAQTD name and job of all the employees working in the same designation as JAMES.
+SQL> 
+SQL> SELECT ENAME,JOB
+  2  FROM EMP
+  3  WHERE JOB = (
+  4                SELECT JOB 
+  5                FROM EMP
+  6                WHERE  ENAME ='JAMES');
+
+ENAME      JOB
+---------- ---------
+SMITH      CLERK
+ADAMS      CLERK
+JAMES      CLERK
+MILLER     CLERK
+
+Q5> WAQTD empno and ename along with annual salary of all the employees if their annual salary is greater than WARD’s annual salary.
+
+  
+SQL>  SELECT EMPNO , ENAME , SAL*12 ANNUAL
+  2   FROM EMP 
+  3  WHERE SAL*12 > (
+  4                    SELECT SAL*12 
+  5                     FROM EMP 
+  6                      WHERE ENAME ='WARD');
+
+     EMPNO ENAME          ANNUAL
+---------- ---------- ----------
+      7499 ALLEN           19200
+      7566 JONES           35700
+      7698 BLAKE           34200
+      7782 CLARK           29400
+      7788 SCOTT           36000
+      7839 KING            60000
+      7844 TURNER          18000
+      7902 FORD            36000
+      7934 MILLER          15600
+
+9 rows selected.
+
+Q6> WAQTD name and hiredate of the employees if they are hired before SCOTT.
+ 
+SQL>  SELECT ENAME,HIREDATE
+  2   FROM EMP
+  3  WHERE HIREDATE < (
+  4                   SELECT HIREDATE 
+  5                   FROM EMP
+  6                   WHERE ENAME='SCOTT');
+
+ENAME      HIREDATE
+---------- ---------
+SMITH      17-DEC-80
+ALLEN      20-FEB-81
+WARD       22-FEB-81
+JONES      02-APR-81
+MARTIN     28-SEP-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+KING       17-NOV-81
+TURNER     08-SEP-81
+JAMES      03-DEC-81
+FORD       03-DEC-81
+MILLER     23-JAN-82
+
+12 rows selected.
+
+
+
+Q7> WAQTD name and hiredate of the employees if they are hired after the PRESIDENT.
+SP2-0734: unknown command beginning "WAQTD name..." - rest of line ignored.
+SQL> 
+SQL> SELECT ENAME,HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE > (
+  4                     SELECT HIREDATE 
+  5                      FROM EMP
+  6                      WHERE JOB='PRESIDENT');
+
+ENAME      HIREDATE
+---------- ---------
+SCOTT      19-APR-87
+ADAMS      23-MAY-87
+JAMES      03-DEC-81
+FORD       03-DEC-81
+MILLER     23-JAN-82
+
+
+
+Q8> WAQTD name and sal of the employee if they are earning sal less than the employee whose empno Is 7839.
+SP2-0734: unknown command beginning "WAQTD name..." - rest of line ignored.
+SQL> SELECT ENAME,SAL 
+  2  FROM EMP
+  3  WHERE SAL<(
+  4          SELECT SAL
+  5          FROM EMP
+  6          WHERE EMPNO='7839');
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+13 rows selected.
+
+
+SQL> 
+Q9> WAQTD all the details of the employees if the employees are hired before MILLER.
+SQL> SELECT *
+  2  FROM EMP 
+  3  WHERE HIREDATE < (
+  4               SELECT HIREDATE 
+  5               FROM EMP
+  6               WHERE ENAME='MILLER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+11 rows selected.
+
+
+Q.10> WAQTD ename and empno of the employees if employees are earning more than ALLEN.
+
+
+SQL> SELECT ENAME , EMPNO,SAL FROM EMP
+  2   WHERE SAL > 
+  3            ( SELECT SAL
+  4              FROM EMP
+  5               WHERE ENAME='ALLEN');
+
+ENAME           EMPNO        SAL
+---------- ---------- ----------
+JONES            7566       2975
+BLAKE            7698       2850
+CLARK            7782       2450
+SCOTT            7788       3000
+KING             7839       5000
+FORD             7902       3000
+
+6 rows selected.
+
+
+Q11 >WAQTD ename and salary of all the employees who are earning more than MILLER but less than ALLEN.
+SQL> SELECT ENAME,SAL
+  2   FROM EMP 
+  3   WHERE SAL > (SELECT SAL 
+  4                 FROM EMP
+  5                 WHERE ENAME='MILLER')
+  6   AND  
+  7         SAL < (SELECT SAL
+  8           FROM EMP 
+  9           WHERE ENAME = 'ALLEN');
+
+ENAME             SAL
+---------- ----------
+TURNER           1500
+
+Q12> WAQTD all the details of the employees working in dept 20 and working in the same designation as SMITH.
+SQL>  SELECT *
+  2   FROM EMP
+  3   WHERE DEPTNO='20'
+  4  AND 
+  5     JOB = ( SELECT JOB 
+  6      FROM EMP
+  7  WHERE ENAME = 'SMITH');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+
+
+Q13> WAQTD all the details of the employees working as MANAGER in the same dept as TURNER.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB ='MANAGER'
+  4  AND 
+  5   DEPTNO =( SELECT DEPTNO 
+  6     FROM EMP
+  7   WHERE ENAME='TURNER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+
+Q14> WAQTD name and hiredate of the employees hired after 1980 and before KING.
+SQL>  SELECT ENAME, HIREDATE
+  2   FROM EMP 
+  3   WHERE HIREDATE >'31-DEC-1980'
+  4   AND 
+  5   HIREDATE < (SELECT HIREDATE
+  6   			FROM EMP
+  7   			 WHERE ENAME = 'KING');
+
+ENAME      HIREDATE
+---------- ---------
+ALLEN      20-FEB-81
+WARD       22-FEB-81
+JONES      02-APR-81
+MARTIN     28-SEP-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+TURNER     08-SEP-81
+
+Q15> WAQTD name and sal along with annual sal for all employees whose sal is less than BLAKE and more than 3500.0
+
+SQL> SELECT ENAME,
+  2         SAL,
+  3         SAL*12 AS ANNUAL_SALARY
+  4  FROM EMP
+  5  WHERE SAL <
+  6        (SELECT SAL
+  7         FROM EMP
+  8         WHERE ENAME = 'BLAKE')
+  9  AND SAL > 3500;
+
+no rows selected
+
+Q16> WAQTD all the details of employees who earn more than SCOTT but less than KING.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL > (SELECT SAL
+  4               FROM EMP
+  5               WHERE ENAME = 'SCOTT')
+  6  AND SAL < (SELECT SAL
+  7             FROM EMP
+  8             WHERE ENAME = 'KING');
+
+no rows selected
+
+
+Q17> WAQTD name of the employees whose name starts with ‘A’ and works in the same dept as BLAKE.
+
+SQL>  SELECT ENAME
+  2   FROM EMP
+  3  WHERE ENAME LIKE 'A%'
+  4   AND  DEPTNO = (
+  5  SELECT DEPTNO
+  6  FROM EMP
+  7  WHERE ENAME='BLAKE');
+
+ENAME
+----------
+ALLEN
+
+Q18 > WAQTD name and comm if employees earn commission and work in the same designation as SMITH.
+SQL> SQL> SELECT ENAME,
+  2         COMM
+  3  FROM EMP
+  4  WHERE COMM IS NOT NULL
+  5  AND JOB = (
+  6      SELECT JOB
+  7      FROM EMP
+  8      WHERE ENAME = 'SMITH'
+  9  );
+
+no rows selected
+
+
+Q19> WAQTD details of all the employees working as CLERK in the same dept as TURNER.
+SP2-0734: unknown command beginning "WAQTD deta..." - rest of line ignored.
+SQL>  SELECT *
+  2   FROM EMP
+  3   WHERE JOB IN 'CLERK'
+  4   AND DEPTNO IN 
+  5   (SELECT DEPTNO 
+  6   FROM EMP
+  7  WHERE ENAME='TURNER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+
+Q20> 

@@ -1,0 +1,1 @@
+# Generator:- The phenomenon of Generating a new collection                             

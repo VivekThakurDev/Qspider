@@ -1,0 +1,143 @@
+Q21 > WAQTD DNAME of the employees whose name is SMITH.
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+Q.22> WAQTD DNAME of the employees whose name is SMITH.
+SP2-0734: unknown command beginning "WAQTD DNAM..." - rest of line ignored.
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4                  FROM EMP
+  5                   WHERE ENAME='SMITH');
+
+DNAME
+--------------
+RESEARCH
+
+Q.23 > WAQTD DNAME and LOC of the employee whose ENAME is KING.
+SP2-0734: unknown command beginning "WAQTD DNAM..." - rest of line ignored.
+SQL> 
+SQL> SELECT DNAME,LOC 
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4                 FROM EMP
+  5                  WHERE ENAME='KING');
+
+DNAME          LOC
+-------------- -------------
+ACCOUNTING     NEW YORK
+
+Q.24> WAQTD DNAME and LOC along with DEPTNO of the employee whose name ends with 'R'.
+SQL> SELECT DEPTNO,DNAME,LOC 
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(
+  4                  SELECT DEPTNO
+  5                   FROM EMP
+  6                    WHERE ENAME LIKE '%R');
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        30 SALES          CHICAGO
+
+Q.25> WAQTD DNAME of the employee whose designation is PRESIDENT.
+
+SQL> 
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN ( SELECT DEPTNO
+  4                     FROM EMP
+  5                     WHERE JOB IN 'PRESIDENT');
+
+DNAME
+--------------
+ACCOUNTING
+
+
+Q.26 > WAQTD names of the employees working in ACCOUNTING department.
+
+SQL> SELECT ENAME
+  2   FROM EMP
+  3   WHERE DEPTNO IN ( SELECT DEPTNO 
+  4                      FROM DEPT
+  5                      WHERE DNAME IN 'ACCOUNTING');
+
+ENAME
+----------
+CLARK
+KING
+MILLER
+
+Q.27 > WAQTD ENAME and SALARIES of the employees who are working in the location CHICAGO
+
+SQL> SELECT ENAME , SAL
+  2  FROM EMP
+  3  WHERE DEPTNO IN
+  4  (              SELECT DEPTNO
+  5                  FROM DEPT 
+  6                   WHERE LOC IN  'CHICAGO');
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+MARTIN           1250
+BLAKE            2850
+TURNER           1500
+JAMES             950
+
+6 rows selected.
+
+Q.28 > WAQTD details of the employees working in SALES. 
+
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO IN (
+  4   SELECT DEPTNO
+  5  FROM DEPT
+  6    WHERE DNAME IN 'SALES');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+6 rows selected.
+
+
+Q.29 > WAQTD details of the employees along with annual salary if employees are working in NEW YORK.
+
+SQL> SELECT EMP.*,  SAL*12 ANNUAL_SAL
+  2  FROM EMP
+  3  WHERE DEPTNO IN ( 
+  4                   SELECT DEPTNO
+  5                   FROM DEPT
+  6                    WHERE LOC IN 'NEW YORK');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO ANNUAL_SAL
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10      29400
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10      60000
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10      15600
+
+Q.30> WAQTD names of employees working in OPERATIONS department.
+
+SQL>  SELECT ENAME
+  2   FROM EMP
+  3   WHERE DEPTNO IN ( SELECT DEPTNO 
+  4                     FROM DEPT 
+  5                     WHERE DNAME ='OPERATIONS');
+
+no rows selected
+

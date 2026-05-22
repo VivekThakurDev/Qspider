@@ -1,0 +1,155 @@
+Q.1 > WAQTD names of the employees earning more than SCOTT in ACCOUNTING department.
+ FROM EMP 
+SQL>  SELECT ENAME
+  2  FROM EMP 
+  3  WHERE SAL > (SELECT SAL 
+  4                FROM EMP
+  5                 WHERE ENAME IN 'SCOTT')
+  6  AND 
+  7       DEPTNO IN ( SELECT DEPTNO 
+  8                    FROM DEPT
+  9                     WHERE DNAME IN 'ACCOUNTING');
+
+ENAME
+----------
+KING
+
+Q.2 > WAQTD details of the employees working as MANAGER in the location CHICAGO.  
+
+SQL>  SELECT *
+  2   FROM EMP
+  3  WHERE JOB IN 'MANAGER'   
+  4  AND 
+  5             DEPTNO IN (
+  6                SELECT DEPTNO 
+  7                 FROM DEPT 
+  8                   WHERE LOC IN 'CHICAGO');
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+Q.3 > WAQTD name and SAL of the employees earning more than KING in the dept ACCOUNTING.
+
+SQL>  SELECT ENAME , SAL
+  2   FROM EMP 
+  3   WHERE SAL >(
+  4               SELECT SAL
+  5                FROM EMP
+  6                 WHERE ENAME IN 'KING')
+  7  ;
+
+no rows selected (Because King has highest package)
+
+Q.4 > WAQTD details of the employees working as SALESMAN in the department SALES.
+
+SQL> SELECT *
+  2  FROM EMP
+  3   WHERE  JOB IN 'SALESMAN'
+  4  AND  DEPTNO IN (
+  5                    SELECT DEPTNO
+  6                     FROM DEPT
+  7                      WHERE DNAME IN 'SALES');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+
+Q.5> WAQTD NAME, SAL, JOB, HIREDATE of the employees working in OPERATIONS department and hired before KING.
+
+SQL>  SELECT ENAME,SAL,JOB,HIREDATE
+  2  FROM EMP
+  3  WHERE DEPTNO IN (
+  4                   SELECT DEPTNO 
+  5                    FROM DEPT
+  6                    WHERE JOB IN 'OPERATION')
+  7  AND 
+  8       HIREDATE < (
+  9                    SELECT HIREDATE 
+ 10                     FROM EMP
+ 11                      WHERE ENAME IN 'KING');
+
+no rows selected ( Because no one in  DEPT OF OPERATION)
+
+Q.6) Display all the employees whose department name ends with 'S'. 
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO IN ( 
+  4                   SELECT DEPTNO 
+  5                    FROM DEPT 
+  6                     WHERE DNAME LIKE '%S');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+6 rows selected.
+
+Q.7 >WAQTD DNAME of the employees whose names have character 'A' in it.
+
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+7 rows selected.
+
+Q.8>WAQTD DNAME and LOC of the employees whose salary is Rs. 800.
+
+
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO= (
+  4     SELECT DEPTNO 
+  5     FROM EMP 
+  6     WHERE SAL IN 800);
+
+DNAME          LOC
+-------------- -------------
+RESEARCH       DALLAS
+
+Q.9 > WAQTD DNAME of the employees who earn commission.
+
+SQL> SELECT DNAME 
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (
+  4                    SELECT DEPTNO 
+  5                     FROM EMP 
+  6                      WHERE COMM IS NOT NULL );
+
+DNAME
+--------------
+SALES
+
+Q.10> WAQTD LOC of the employees if they earn commission in DEPT 40.
+
+SQL> SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO =40
+  4  AND DEPTNO IN (
+  5                 SELECT DEPTNO 
+  6                  FROM EMP
+  7                  WHERE COMM IS NOT NULL);
+
+no rows selected
+

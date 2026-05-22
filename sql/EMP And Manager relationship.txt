@@ -1,0 +1,130 @@
+Q.1 WAQTD SMITH's reporting manager's name.
+SQL>
+ SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO = (
+  4      SELECT MGR
+  5      FROM EMP
+  6      WHERE ENAME = 'SMITH'
+  7  );
+
+ENAME
+----------
+FORD
+
+Q.2 WAQTD ADAMS manager's manager name.
+SQL> SELECT ENAME
+  2   FROM EMP
+  3  WHERE EMPNO= (
+  4            SELECT MGR
+  5                FROM EMP
+  6                WHERE ENAME='ADAMS');
+
+ENAME
+----------
+SCOTT
+
+Q.3 WAQTD DNAME of JONES manager.
+SQL>  SELECT DNAME
+  2  FROM DEPT
+  3   WHERE DEPTNO = (SELECT DEPTNO 
+  4                    FROM EMP 
+  5                     WHERE EMPNO=( 
+  6                                   SELECT MGR 
+  7                                    FROM EMP
+  8                                     WHERE ENAME='JONES'));
+
+DNAME
+--------------
+ACCOUNTING
+
+
+Q.4 WAQTD MILLER's manager's salary. 
+
+SQL>   SELECT SAL
+  2  FROM EMP 
+  3  WHERE EMPNO= 
+  4  ( SELECT MGR 
+  5              FROM EMP 
+  6                WHERE ENAME IN 'MILLER');
+
+       SAL
+----------
+      2450
+
+Q.5 WAQTD LOC of SMITH's manager's manager.
+
+SQL> SELECT LOC 
+  2  FROM DEPT
+  3  WHERE DEPTNO=
+  4       (SELECT DEPTNO 
+  5        FROM EMP
+  6        WHERE EMPNO=(
+  7                     SELECT MGR
+  8                      FROM EMP
+  9                       WHERE EMPNO IN (
+ 10                                        SELECT MGR
+ 11                                        FROM EMP
+ 12                                        WHERE ENAME='SMITH')));
+
+LOC
+-------------
+DALLAS
+
+Q.6 WAQTD name of the employees reporting to BLAKE.
+
+SQL> SELECT ENAME 
+  2   FROM EMP 
+  3  WHERE MGR = (SELECT EMPNO
+  4                FROM EMP
+  5                   WHERE ENAME='BLAKE');
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+JAMES
+
+Q.7  WAQTD number of employees reporting to KING.
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE MGR IN (
+  4                SELECT EMPNO 
+  5                 FROM EMP
+  6                  WHERE ENAME='KING');
+
+  COUNT(*)
+----------
+         3
+
+Q.8 WAQTD ENAMES of the employees reporting to BLAKE's manager.
+SQL> WAQTD ENAMES of the employees reporting to BLAKE's manager.
+SP2-0734: unknown command beginning "WAQTD ENAM..." - rest of line ignored.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE MGR IN (
+  4                 SELECT EMPNO
+  5                  FROM EMP 
+  6                  WHERE ENAME='BLAKE');
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+JAMES
+
+Q.9 WAQTD number of employees reporting to FORD's manager.
+SQL>  SELECT COUNT(*)
+  2   FROM EMP
+  3   WHERE MGR IN  (
+  4                     SELECT EMPNO
+  5                      FROM  EMP
+  6                      WHERE ENAME='FORD');
+
+  COUNT(*)
+----------
+         1'   
